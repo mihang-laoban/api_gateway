@@ -16,10 +16,12 @@ limitations under the License.
 package cmd
 
 import (
+	"api_gateway/public"
 	"fmt"
-	"os"
 	"github.com/spf13/cobra"
+	"os"
 
+	. "api_gateway/conf"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
@@ -53,7 +55,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.api_gateway.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "conf", "conf/conf.toml", "config file (default is $HOME/conf.toml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -72,13 +74,17 @@ func initConfig() {
 
 		// Search config in home directory with name ".api_gateway" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".api_gateway")
+		viper.SetConfigName("conf.go")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		_, err = fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+	if err := viper.Unmarshal(&C); err != nil {
+		panic(C)
+	}
+	public.App.Init()
 }
