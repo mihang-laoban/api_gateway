@@ -50,7 +50,7 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
+	cobra.OnInitialize(InitConfig)
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
@@ -62,8 +62,8 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
+// InitConfig reads in config file and ENV variables if set.
+func InitConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)

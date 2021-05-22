@@ -6,4 +6,5 @@ var RouteMapping = make(map[string]gin.HandlerFunc)
 
 func init() {
 	RouteMapping["ping"] = Ping
+	RouteMapping["pingThis"] = PingThis
 }

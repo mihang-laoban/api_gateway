@@ -15,8 +15,17 @@ limitations under the License.
 */
 package main
 
-import "api_gateway/cmd"
+import (
+	"api_gateway/cmd"
+	"api_gateway/public"
+)
+
+func debug() {
+	cmd.InitConfig()
+	public.Run()
+}
 
 func main() {
-	cmd.Execute()
+	debug()
+	//cmd.Execute()
 }
